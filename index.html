@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фонд покупки игр — Игоры</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #1a1a1f;
+      --surface2: #24242b;
+      --text: #e8e8ec;
+      --text-muted: #8b8b96;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --border: #2e2e36;
+      --green: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero & CTA */
+    header {
+      padding: 48px 0 56px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 700;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin: 0 0 32px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .cta:focus-visible {
+      outline: 2px solid var(--accent-hover);
+      outline-offset: 2px;
+    }
+
+    /* Sections */
+    section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 0 0 20px;
+      color: var(--text);
+    }
+
+    /* Holst block */
+    .holst-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .holst-block h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+
+    .holst-block p {
+      margin: 0 0 12px;
+      color: var(--text-muted);
+    }
+
+    .holst-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .holst-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
+    .holst-link:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    /* Table embed */
+    .sheet-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .sheet-header {
+      padding: 16px 20px;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sheet-header a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .sheet-header a:hover {
+      text-decoration: underline;
+    }
+
+    .sheet-embed {
+      width: 100%;
+      height: 500px;
+      border: none;
+      display: block;
+    }
+
+    /* Donate block */
+    .donate-section {
+      text-align: center;
+      padding: 56px 0;
+    }
+
+    .donate-section .section-title {
+      margin-bottom: 12px;
+    }
+
+    .donate-desc {
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+
+    .donate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 32px;
+      background: var(--green);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      border-radius: 12px;
+      transition: filter 0.2s, transform 0.15s;
+    }
+
+    .donate-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      padding: 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Фонд покупки игр</h1>
+      <p class="tagline">Общий котёл на игры. Кто скинулся — видно в таблице.</p>
+      <a class="cta" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">Скинуться в фонд</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">Информация</h2>
+      <div class="holst-block">
+        <p>Здесь — краткая информация о фонде, правилах и том, как всё устроено. Актуальная доска с деталями и обновлениями:</p>
+        <a class="holst-link" href="https://app.holst.so/board/4c5cf358-f3bd-4e4e-8cbc-1cdbea15c295" target="_blank" rel="noopener">Открыть доску в Holst →</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Скопируйте текст с доски и вставьте в этот блок при необходимости, или оставьте ссылку выше.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">Кто получил игру и остатки</h2>
+      <div class="sheet-wrap">
+        <div class="sheet-header">
+          <span>Таблица «Игоры»</span>
+          <a href="https://docs.google.com/spreadsheets/d/1-KAV0NN_54BkTY2DCU9BgjPJQ2aGasgY2GhZhYhzCDM/edit?gid=0#gid=0" target="_blank" rel="noopener">Открыть в Google Таблицах</a>
+        </div>
+        <iframe
+          class="sheet-embed"
+          src="https://docs.google.com/spreadsheets/d/1-KAV0NN_54BkTY2DCU9BgjPJQ2aGasgY2GhZhYhzCDM/pubhtml?widget=true&headers=false&gid=0"
+          title="Таблица Игоры — кто получил игру"
+        ></iframe>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 12px;">Если таблица не отображается, откройте её по ссылке выше. Владельцу таблицы нужно: Файл → Опубликовать в интернете → Встроить, чтобы виджет работал здесь.</p>
+    </div>
+  </section>
+
+  <section class="donate-section">
+    <div class="container">
+      <h2 class="section-title">Скинуться в фонд</h2>
+      <p class="donate-desc">Переводы идут в общий котёл на покупку игр. Кто сколько скинул и кто получил игру — в таблице выше.</p>
+      <a class="donate-btn" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">Перейти к сбору (Т‑Банк)</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">Фонд покупки игр · Игоры</div>
+  </footer>
+</body>
+</html>
