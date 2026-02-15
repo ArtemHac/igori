@@ -121,6 +121,90 @@
       75% { transform: translate(-15px, -10px); opacity: 0.9; }
     }
 
+    /* Падающие линии — фон */
+    .bg-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 90vw;
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-lines .line {
+      position: relative;
+      display: block;
+      width: 1px;
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .bg-lines .line::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 15vh;
+      width: 100%;
+      top: -50%;
+      left: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 75%, rgba(255,255,255,0.5) 100%);
+      animation: lineDrop 7s 0s infinite;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+    }
+
+    .bg-lines .line:nth-child(1)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,69,0,0.6) 75%, rgba(255,69,0,0.6) 100%);
+      animation-delay: 0.5s;
+    }
+    .bg-lines .line:nth-child(2)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(50,205,50,0.6) 75%, rgba(50,205,50,0.6) 100%);
+      animation-delay: 1s;
+    }
+    .bg-lines .line:nth-child(3)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(99,102,241,0.6) 75%, rgba(99,102,241,0.6) 100%);
+      animation-delay: 1.5s;
+    }
+    .bg-lines .line:nth-child(4)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,215,0,0.6) 75%, rgba(255,215,0,0.6) 100%);
+      animation-delay: 2s;
+    }
+    .bg-lines .line:nth-child(5)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(138,43,226,0.6) 75%, rgba(138,43,226,0.6) 100%);
+      animation-delay: 2.5s;
+    }
+    .bg-lines .line:nth-child(6)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(32,178,170,0.6) 75%, rgba(32,178,170,0.6) 100%);
+      animation-delay: 3s;
+    }
+    .bg-lines .line:nth-child(7)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(220,20,60,0.6) 75%, rgba(220,20,60,0.6) 100%);
+      animation-delay: 3.5s;
+    }
+    .bg-lines .line:nth-child(8)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0,250,154,0.6) 75%, rgba(0,250,154,0.6) 100%);
+      animation-delay: 4s;
+    }
+    .bg-lines .line:nth-child(9)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,20,147,0.6) 75%, rgba(255,20,147,0.6) 100%);
+      animation-delay: 4.5s;
+    }
+    .bg-lines .line:nth-child(10)::after {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0,191,255,0.6) 75%, rgba(0,191,255,0.6) 100%);
+      animation-delay: 5s;
+    }
+
+    @keyframes lineDrop {
+      0% { top: -50%; }
+      100% { top: 110%; }
+    }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -546,6 +630,10 @@
 </head>
 <body>
   <div class="bg-game">
+    <div class="bg-lines" aria-hidden="true">
+      <span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span>
+      <span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span><span class="line"></span>
+    </div>
     <div class="bg-particles">
       <span></span><span></span><span></span><span></span><span></span>
       <span></span><span></span><span></span><span></span>
