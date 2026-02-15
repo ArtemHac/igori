@@ -146,26 +146,87 @@
       margin: 0 0 32px;
     }
 
-    .cta {
+    /* Liquid morph — кнопки «Скинуться» и «Перейти к сбору» */
+    .cta,
+    .donate-btn {
       display: inline-flex;
+      justify-content: center;
       align-items: center;
       gap: 10px;
+      min-width: 200px;
       padding: 16px 28px;
-      background: var(--accent);
       color: #fff;
       text-decoration: none;
       font-weight: 600;
       font-size: 1.1rem;
-      border-radius: 12px;
-      transition: background 0.2s, transform 0.15s;
+      position: relative;
+      border-radius: 50px;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
-    .cta:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
+    .cta {
+      background: var(--accent);
     }
 
-    .cta:focus-visible {
+    .donate-btn {
+      padding: 18px 32px;
+      font-size: 1.15rem;
+      background: var(--green);
+    }
+
+    .cta .btn-inner,
+    .donate-btn .btn-inner {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cta::before,
+    .donate-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .cta::before {
+      background: conic-gradient(
+        #a5b4fc 0deg,
+        var(--accent) 120deg,
+        #c7d2fe 240deg
+      );
+    }
+
+    .donate-btn::before {
+      background: conic-gradient(
+        #4ade80 0deg,
+        var(--green) 120deg,
+        #86efac 240deg
+      );
+    }
+
+    .cta:hover,
+    .donate-btn:hover {
+      border-radius: 10px;
+      transform: rotate(8deg);
+    }
+
+    .cta:hover::before,
+    .donate-btn:hover::before {
+      opacity: 0.5;
+      transform: scale(2);
+    }
+
+    .cta:focus-visible,
+    .donate-btn:focus-visible {
       outline: 2px solid var(--accent-hover);
       outline-offset: 2px;
     }
@@ -275,25 +336,6 @@
     .donate-desc {
       color: var(--text-muted);
       margin: 0 0 24px;
-    }
-
-    .donate-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 18px 32px;
-      background: var(--green);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.15rem;
-      border-radius: 12px;
-      transition: filter 0.2s, transform 0.15s;
-    }
-
-    .donate-btn:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
     }
 
     .tbank-icon {
@@ -431,8 +473,10 @@
       <h1>Фонд покупки игр</h1>
       <p class="tagline">Общий котёл на игры. Кто скинулся — видно в таблице.</p>
       <a class="cta" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">
-        <span class="tbank-icon" aria-hidden="true">T</span>
-        Скинуться в фонд
+        <span class="btn-inner">
+          <span class="tbank-icon" aria-hidden="true">T</span>
+          Скинуться в фонд
+        </span>
       </a>
     </div>
   </header>
@@ -471,8 +515,10 @@
       <h2 class="section-title">Скинуться в фонд</h2>
       <p class="donate-desc">Переводы идут в общий котёл на покупку игр. Кто сколько скинул и кто получил игру — в таблице выше.</p>
       <a class="donate-btn" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">
-        <span class="tbank-icon" aria-hidden="true">T</span>
-        Перейти к сбору (Т‑Банк)
+        <span class="btn-inner">
+          <span class="tbank-icon" aria-hidden="true">T</span>
+          Перейти к сбору (Т‑Банк)
+        </span>
       </a>
     </div>
   </section>
