@@ -413,36 +413,79 @@
       max-height: 200px;
     }
 
-    /* Грибок в левом углу — только PNG с прозрачностью */
+    /* Кастомная кнопка-гриб с дёрганием */
     .mushroom-btn {
       position: fixed;
       top: 16px;
       left: 16px;
       z-index: 10;
-      width: 64px;
+      width: 56px;
       height: 64px;
       padding: 0;
       border: none;
       background: transparent;
       border-radius: 0;
-      transition: transform 0.2s;
+      cursor: pointer;
+      animation: mushroom-wiggle 2.5s ease-in-out infinite;
+      transition: transform 0.15s;
     }
 
     .mushroom-btn:hover {
-      transform: scale(1.1);
+      animation-duration: 1.2s;
+      transform: scale(1.08);
     }
 
     .mushroom-btn:active {
       transform: scale(0.95);
     }
 
-    .mushroom-btn img {
+    @keyframes mushroom-wiggle {
+      0%, 100% { transform: translateX(0) rotate(-1deg); }
+      25% { transform: translateX(-4px) rotate(1.5deg); }
+      50% { transform: translateX(2px) rotate(-1.5deg); }
+      75% { transform: translateX(3px) rotate(1deg); }
+    }
+
+    .mushroom-shape {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      position: relative;
       display: block;
-      background: transparent;
-      vertical-align: middle;
+    }
+
+    .mushroom-cap {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52px;
+      height: 32px;
+      background: linear-gradient(180deg, #8b5a2b 0%, #6b4423 40%, #5d3a1f 100%);
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: inset 2px 2px 4px rgba(255,255,255,0.2), inset -1px -1px 2px rgba(0,0,0,0.2);
+    }
+
+    .mushroom-cap::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      width: 6px;
+      height: 6px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 50%;
+    }
+
+    .mushroom-stem {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 32px;
+      background: linear-gradient(90deg, #e8d5b5 0%, #d4c4a0 50%, #c9b896 100%);
+      border-radius: 0 0 6px 6px;
+      box-shadow: inset 1px 0 0 rgba(255,255,255,0.4);
     }
 
     footer {
@@ -461,8 +504,11 @@
     </div>
   </div>
 
-  <button type="button" class="mushroom-btn" id="mushroom-btn" title="Нажми — заиграет музыка">
-    <img src="assets/mushroom.png" alt="Грибок" width="64" height="64">
+  <button type="button" class="mushroom-btn" id="mushroom-btn" title="Нажми — заиграет музыка" aria-label="Включить музыку">
+    <span class="mushroom-shape">
+      <span class="mushroom-cap"></span>
+      <span class="mushroom-stem"></span>
+    </span>
   </button>
   <audio id="mushroom-audio" preload="auto">
     <source src="music/track.mp3" type="audio/mpeg">
