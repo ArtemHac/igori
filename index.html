@@ -18,6 +18,8 @@
       --accent-hover: #818cf8;
       --border: #2e2e36;
       --green: #22c55e;
+      --sber: #21a038;
+      --sber-light: #2fd656;
     }
 
     * {
@@ -146,9 +148,10 @@
       margin: 0 0 32px;
     }
 
-    /* Liquid morph — кнопки «Скинуться» и «Перейти к сбору» */
+    /* Liquid morph — кнопки сбора (Т‑Банк, Сбер) */
     .cta,
-    .donate-btn {
+    .donate-btn,
+    .sber-btn {
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -169,14 +172,23 @@
       background: var(--accent);
     }
 
-    .donate-btn {
+    .donate-btn,
+    .sber-btn {
       padding: 18px 32px;
       font-size: 1.15rem;
+    }
+
+    .donate-btn {
       background: var(--green);
     }
 
+    .sber-btn {
+      background: var(--sber);
+    }
+
     .cta .btn-inner,
-    .donate-btn .btn-inner {
+    .donate-btn .btn-inner,
+    .sber-btn .btn-inner {
       position: relative;
       z-index: 2;
       display: inline-flex;
@@ -185,7 +197,8 @@
     }
 
     .cta::before,
-    .donate-btn::before {
+    .donate-btn::before,
+    .sber-btn::before {
       content: '';
       position: absolute;
       top: 0;
@@ -213,20 +226,31 @@
       );
     }
 
+    .sber-btn::before {
+      background: conic-gradient(
+        #5ee081 0deg,
+        var(--sber) 120deg,
+        #9ae6ad 240deg
+      );
+    }
+
     .cta:hover,
-    .donate-btn:hover {
+    .donate-btn:hover,
+    .sber-btn:hover {
       border-radius: 10px;
       transform: rotate(8deg);
     }
 
     .cta:hover::before,
-    .donate-btn:hover::before {
+    .donate-btn:hover::before,
+    .sber-btn:hover::before {
       opacity: 0.5;
       transform: scale(2);
     }
 
     .cta:focus-visible,
-    .donate-btn:focus-visible {
+    .donate-btn:focus-visible,
+    .sber-btn:focus-visible {
       outline: 2px solid var(--accent-hover);
       outline-offset: 2px;
     }
@@ -338,6 +362,14 @@
       margin: 0 0 24px;
     }
 
+    .donate-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+
     .tbank-icon {
       width: 24px;
       height: 24px;
@@ -353,8 +385,24 @@
       line-height: 1;
     }
 
+    .sber-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--sber);
+      line-height: 1;
+    }
+
     .cta .tbank-icon,
-    .donate-btn .tbank-icon {
+    .donate-btn .tbank-icon,
+    .sber-btn .sber-icon {
       width: 28px;
       height: 28px;
       font-size: 16px;
@@ -560,12 +608,20 @@
     <div class="container">
       <h2 class="section-title">Скинуться в фонд</h2>
       <p class="donate-desc">Переводы идут в общий котёл на покупку игр. Кто сколько скинул и кто получил игру — в таблице выше.</p>
-      <a class="donate-btn" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">
-        <span class="btn-inner">
-          <span class="tbank-icon" aria-hidden="true">T</span>
-          Перейти к сбору (Т‑Банк)
-        </span>
-      </a>
+      <div class="donate-buttons">
+        <a class="donate-btn" href="https://www.tbank.ru/cf/9Acex5vyEfu" target="_blank" rel="noopener">
+          <span class="btn-inner">
+            <span class="tbank-icon" aria-hidden="true">T</span>
+            Перейти к сбору (Т‑Банк)
+          </span>
+        </a>
+        <a class="sber-btn" href="https://messenger.online.sberbank.ru/sl/241sxeyhDXOQT2u4G" target="_blank" rel="noopener">
+          <span class="btn-inner">
+            <span class="sber-icon" aria-hidden="true">S</span>
+            Перейти к сбору (Сбер)
+          </span>
+        </a>
+      </div>
     </div>
   </section>
 
