@@ -803,7 +803,7 @@
 
     .wheel-svg text.wheel-segment-text {
       fill: #fff;
-      font-size: 12px;
+      font-size: 9px;
       font-weight: 600;
       text-anchor: middle;
       dominant-baseline: middle;
@@ -812,7 +812,7 @@
     }
 
     @media (min-width: 500px) {
-      .wheel-svg text.wheel-segment-text { font-size: 13px; }
+      .wheel-svg text.wheel-segment-text { font-size: 10px; }
     }
 
     .wheel-spin-btn-wrap {
@@ -1247,11 +1247,11 @@
           paths.push('<path class="wheel-segment" data-index="' + i + '" fill="' + color + '" d="' + d + '"/>');
 
           var midAngle = (i + 0.5) * sectorAngle;
-          var textR = 64;
+          var textR = 55;
           var tp = pointOnCircle(cx, cy, textR, midAngle);
           var rawName = state.players[i];
           var safeName = rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-          var displayName = rawName.length > 24 ? rawName.slice(0, 22) + '…' : rawName;
+          var displayName = rawName.length > 22 ? rawName.slice(0, 20) + '…' : rawName;
           var displaySafe = displayName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
           texts.push('<text class="wheel-segment-text" x="' + tp.x + '" y="' + tp.y + '" transform="rotate(' + midAngle + ', ' + tp.x + ', ' + tp.y + ')" title="' + safeName + '">' + displaySafe + '</text>');
         }
