@@ -790,32 +790,29 @@
       transition: transform 2.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
     }
 
-    .wheel-sector {
-      position: absolute;
-      left: 0;
-      top: 0;
+    .wheel-svg {
+      display: block;
       width: 100%;
       height: 100%;
-      overflow: hidden;
     }
 
-    .wheel-sector-label {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform-origin: 50% 50%;
-      font-size: clamp(0.65rem, 2.2vw, 0.85rem);
+    .wheel-svg path.wheel-segment {
+      stroke: rgba(0,0,0,0.15);
+      stroke-width: 1;
+    }
+
+    .wheel-svg text.wheel-segment-text {
+      fill: #fff;
+      font-size: 10px;
       font-weight: 600;
-      color: #fff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-      white-space: nowrap;
-      max-width: 38%;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .wheel-sector.winner-highlight .wheel-sector-label {
-      filter: brightness(1.2);
+    @media (min-width: 400px) {
+      .wheel-svg text.wheel-segment-text { font-size: 11px; }
     }
 
     .wheel-spin-btn-wrap {
@@ -1214,31 +1211,51 @@
         });
       }
 
+      function rad(deg) {
+        return (deg * Math.PI) / 180;
+      }
+
+      function pointOnCircle(cx, cy, r, angleDeg) {
+        var a = rad(angleDeg);
+        return {
+          x: cx + r * Math.sin(a),
+          y: cy - r * Math.cos(a)
+        };
+      }
+
       function renderWheel() {
         var N = state.players.length;
+        var cx = 100;
+        var cy = 100;
+        var r = 100;
         if (N === 0) {
-          diskInner.innerHTML = '<p style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--text-muted);font-size:0.9rem;">Добавьте участников</p>';
+          diskInner.innerHTML = '<svg class="wheel-svg" viewBox="0 0 200 200"><text x="100" y="100" text-anchor="middle" fill="var(--text-muted)" font-size="12">Добавьте участников</text></svg>';
           return;
         }
 
         var sectorAngle = 360 / N;
-        var html = '';
+        var paths = [];
+        var texts = [];
         for (var i = 0; i < N; i++) {
-          var a1 = (i * sectorAngle) * Math.PI / 180;
-          var a2 = ((i + 1) * sectorAngle) * Math.PI / 180;
-          var x1 = 50 + 50 * Math.sin(a1);
-          var y1 = 50 - 50 * Math.cos(a1);
-          var x2 = 50 + 50 * Math.sin(a2);
-          var y2 = 50 - 50 * Math.cos(a2);
-          var clip = 'polygon(50% 50%, ' + x1 + '% ' + y1 + '%, ' + x2 + '% ' + y2 + '%)';
+          var a1 = i * sectorAngle;
+          var a2 = (i + 1) * sectorAngle;
+          var p1 = pointOnCircle(cx, cy, r, a1);
+          var p2 = pointOnCircle(cx, cy, r, a2);
+          var largeArc = sectorAngle > 180 ? 1 : 0;
+          var d = 'M ' + cx + ' ' + cy + ' L ' + p1.x + ' ' + p1.y + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + p2.x + ' ' + p2.y + ' Z';
           var color = WHEEL_COLORS[i % WHEEL_COLORS.length];
-          var labelRotate = i * sectorAngle + sectorAngle / 2;
-          var safeName = state.players[i].replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          html += '<div class="wheel-sector" data-index="' + i + '" style="clip-path: ' + clip + '; background: ' + color + ';">';
-          html += '<span class="wheel-sector-label" style="transform: rotate(' + labelRotate + 'deg) translateY(-28%);">' + safeName + '</span>';
-          html += '</div>';
+          paths.push('<path class="wheel-segment" data-index="' + i + '" fill="' + color + '" d="' + d + '"/>');
+
+          var midAngle = (i + 0.5) * sectorAngle;
+          var textR = 58;
+          var tp = pointOnCircle(cx, cy, textR, midAngle);
+          var rawName = state.players[i];
+          var safeName = rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          var displayName = rawName.length > 14 ? rawName.slice(0, 12) + '…' : rawName;
+          var displaySafe = displayName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          texts.push('<text class="wheel-segment-text" x="' + tp.x + '" y="' + tp.y + '" transform="rotate(' + midAngle + ', ' + tp.x + ', ' + tp.y + ')" title="' + safeName + '">' + displaySafe + '</text>');
         }
-        diskInner.innerHTML = html;
+        diskInner.innerHTML = '<svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' + paths.join('') + texts.join('') + '</svg>';
       }
 
       function updateUI() {
