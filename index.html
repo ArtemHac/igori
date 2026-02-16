@@ -757,8 +757,8 @@
 
     .wheel-outer {
       position: relative;
-      width: min(320px, 85vw);
-      max-width: 400px;
+      width: min(480px, 92vw);
+      max-width: 560px;
       aspect-ratio: 1;
     }
 
@@ -803,7 +803,7 @@
 
     .wheel-svg text.wheel-segment-text {
       fill: #fff;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
       text-anchor: middle;
       dominant-baseline: middle;
@@ -811,13 +811,13 @@
       user-select: none;
     }
 
-    @media (min-width: 400px) {
-      .wheel-svg text.wheel-segment-text { font-size: 11px; }
+    @media (min-width: 500px) {
+      .wheel-svg text.wheel-segment-text { font-size: 13px; }
     }
 
     .wheel-spin-btn-wrap {
       position: absolute;
-      inset: 28%;
+      inset: 30%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1247,11 +1247,11 @@
           paths.push('<path class="wheel-segment" data-index="' + i + '" fill="' + color + '" d="' + d + '"/>');
 
           var midAngle = (i + 0.5) * sectorAngle;
-          var textR = 58;
+          var textR = 64;
           var tp = pointOnCircle(cx, cy, textR, midAngle);
           var rawName = state.players[i];
-          var safeName = rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          var displayName = rawName.length > 14 ? rawName.slice(0, 12) + '…' : rawName;
+          var safeName = rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+          var displayName = rawName.length > 24 ? rawName.slice(0, 22) + '…' : rawName;
           var displaySafe = displayName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
           texts.push('<text class="wheel-segment-text" x="' + tp.x + '" y="' + tp.y + '" transform="rotate(' + midAngle + ', ' + tp.x + ', ' + tp.y + ')" title="' + safeName + '">' + displaySafe + '</text>');
         }
