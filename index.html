@@ -737,6 +737,231 @@
       box-shadow: inset 1px 0 0 rgba(255,255,255,0.4);
     }
 
+    /* ========== Колесо удачи ========== */
+    .wheel-section {
+      padding: 48px 0;
+    }
+
+    .wheel-section .section-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .wheel-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .wheel-outer {
+      position: relative;
+      width: min(320px, 85vw);
+      max-width: 400px;
+      aspect-ratio: 1;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 24px solid #d4af37;
+      z-index: 5;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+
+    .wheel-disk {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px var(--border), 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .wheel-disk-inner {
+      position: absolute;
+      inset: 0;
+      transition: transform 2.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    }
+
+    .wheel-sector {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .wheel-sector-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% 50%;
+      font-size: clamp(0.65rem, 2.2vw, 0.85rem);
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      white-space: nowrap;
+      max-width: 38%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wheel-sector.winner-highlight .wheel-sector-label {
+      filter: brightness(1.2);
+    }
+
+    .wheel-spin-btn-wrap {
+      position: absolute;
+      inset: 28%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .wheel-spin-btn-wrap .wheel-spin-btn {
+      pointer-events: auto;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid #d4af37;
+      background: linear-gradient(145deg, #2a2a32, #1a1a1f);
+      color: #d4af37;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .wheel-spin-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .wheel-spin-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .wheel-winner-text {
+      min-height: 2em;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #d4af37;
+      text-align: center;
+    }
+
+    .wheel-history {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .wheel-history h4 {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .wheel-history ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .wheel-history li {
+      padding: 4px 0;
+      font-size: 0.9rem;
+    }
+
+    .wheel-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto 12px;
+    }
+
+    .wheel-controls textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+    }
+
+    .wheel-controls textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .wheel-controls-btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .wheel-controls-btns button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .wheel-btn-update {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .wheel-btn-update:hover {
+      background: var(--accent-hover);
+    }
+
+    .wheel-btn-reset {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .wheel-btn-reset:hover {
+      background: var(--border);
+    }
+
+    .wheel-warning {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 8px;
+      min-height: 1.4em;
+    }
+
+    .wheel-confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
     footer {
       padding: 24px;
       text-align: center;
@@ -830,6 +1055,39 @@
     </div>
   </section>
 
+  <section class="wheel-section">
+    <div class="container">
+      <h2 class="section-title">Колесо удачи</h2>
+      <div class="wheel-wrapper">
+        <div class="wheel-outer">
+          <div class="wheel-pointer" aria-hidden="true"></div>
+          <div class="wheel-disk">
+            <div class="wheel-disk-inner" id="wheel-disk-inner">
+              <!-- Секторы рисуются JS -->
+            </div>
+          </div>
+          <div class="wheel-spin-btn-wrap">
+            <button type="button" class="wheel-spin-btn" id="wheel-spin-btn">Крутить</button>
+          </div>
+        </div>
+        <p class="wheel-winner-text" id="wheel-winner-text" aria-live="polite"></p>
+        <div class="wheel-history">
+          <h4>Выпавшие победители</h4>
+          <ul id="wheel-history-list"></ul>
+        </div>
+      </div>
+      <div class="wheel-controls">
+        <textarea id="wheel-list-input" placeholder="Один участник на строку. Пустые строки и дубликаты удаляются."></textarea>
+        <div class="wheel-controls-btns">
+          <button type="button" class="wheel-btn-update" id="wheel-btn-update">Обновить список</button>
+          <button type="button" class="wheel-btn-reset" id="wheel-btn-reset">Сброс</button>
+        </div>
+        <p class="wheel-warning" id="wheel-warning"></p>
+      </div>
+    </div>
+  </section>
+  <canvas class="wheel-confetti-canvas" id="wheel-confetti-canvas" aria-hidden="true"></canvas>
+
   <section class="pindari-section">
     <div class="container">
       <div class="pindari-title-center">
@@ -907,6 +1165,207 @@
           audio.currentTime = 0;
         }
       });
+    })();
+
+    /* ========== Колесо удачи ========== */
+    (function () {
+      var initialPlayers = [
+        'Данил Истомаин',
+        'Артем Хачатрян',
+        'Влад Несмиянов',
+        'Андрей Башкатов',
+        'Артём Тертышников'
+      ];
+
+      var WHEEL_COLORS = ['#6366f1', '#22c55e', '#e11d48', '#d97706', '#0891b2', '#7c3aed', '#dc2626', '#16a34a', '#ea580c', '#2563eb'];
+
+      var diskInner = document.getElementById('wheel-disk-inner');
+      var spinBtn = document.getElementById('wheel-spin-btn');
+      var winnerEl = document.getElementById('wheel-winner-text');
+      var historyList = document.getElementById('wheel-history-list');
+      var listInput = document.getElementById('wheel-list-input');
+      var btnUpdate = document.getElementById('wheel-btn-update');
+      var btnReset = document.getElementById('wheel-btn-reset');
+      var warningEl = document.getElementById('wheel-warning');
+      var canvas = document.getElementById('wheel-confetti-canvas');
+
+      if (!diskInner || !spinBtn) return;
+
+      var state = {
+        players: initialPlayers.slice(),
+        currentRotation: 0,
+        isSpinning: false,
+        winnerHistory: []
+      };
+
+      function parseList(text) {
+        return text.split(/\n/)
+          .map(function (s) { return s.trim(); })
+          .filter(Boolean);
+      }
+
+      function dedupe(arr) {
+        var seen = {};
+        return arr.filter(function (x) {
+          var key = x.toLowerCase();
+          if (seen[key]) return false;
+          seen[key] = true;
+          return true;
+        });
+      }
+
+      function renderWheel() {
+        var N = state.players.length;
+        if (N === 0) {
+          diskInner.innerHTML = '<p style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--text-muted);font-size:0.9rem;">Добавьте участников</p>';
+          return;
+        }
+
+        var sectorAngle = 360 / N;
+        var html = '';
+        for (var i = 0; i < N; i++) {
+          var a1 = (i * sectorAngle) * Math.PI / 180;
+          var a2 = ((i + 1) * sectorAngle) * Math.PI / 180;
+          var x1 = 50 + 50 * Math.sin(a1);
+          var y1 = 50 - 50 * Math.cos(a1);
+          var x2 = 50 + 50 * Math.sin(a2);
+          var y2 = 50 - 50 * Math.cos(a2);
+          var clip = 'polygon(50% 50%, ' + x1 + '% ' + y1 + '%, ' + x2 + '% ' + y2 + '%)';
+          var color = WHEEL_COLORS[i % WHEEL_COLORS.length];
+          var labelRotate = i * sectorAngle + sectorAngle / 2;
+          var safeName = state.players[i].replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          html += '<div class="wheel-sector" data-index="' + i + '" style="clip-path: ' + clip + '; background: ' + color + ';">';
+          html += '<span class="wheel-sector-label" style="transform: rotate(' + labelRotate + 'deg) translateY(-28%);">' + safeName + '</span>';
+          html += '</div>';
+        }
+        diskInner.innerHTML = html;
+      }
+
+      function updateUI() {
+        var canSpin = state.players.length >= 2 && !state.isSpinning;
+        spinBtn.disabled = !canSpin;
+        if (state.players.length > 0 && state.players.length < 2) {
+          warningEl.textContent = 'Нужно минимум 2 участника для вращения.';
+        } else {
+          warningEl.textContent = '';
+        }
+        listInput.value = state.players.join('\n');
+        historyList.innerHTML = state.winnerHistory.map(function (name, i) {
+          return '<li>' + (state.winnerHistory.length - i) + '. ' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</li>';
+        }).join('');
+      }
+
+      function runConfetti() {
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width = window.innerWidth;
+        var h = canvas.height = window.innerHeight;
+        var particles = [];
+        var colors = ['#d4af37', '#ffd700', '#ffec8b', '#6366f1', '#22c55e', '#e11d48', '#f59e0b'];
+        for (var i = 0; i < 80; i++) {
+          particles.push({
+            x: w / 2,
+            y: h / 2,
+            vx: (Math.random() - 0.5) * 14,
+            vy: (Math.random() - 0.6) * 14,
+            size: 4 + Math.random() * 6,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            life: 1
+          });
+        }
+        var start = performance.now();
+        var duration = 1800;
+
+        function tick(now) {
+          var elapsed = now - start;
+          if (elapsed > duration) {
+            canvas.width = 0;
+            canvas.height = 0;
+            return;
+          }
+          ctx.clearRect(0, 0, w, h);
+          var decay = 1 - elapsed / duration;
+          particles.forEach(function (p) {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.25;
+            p.life = decay;
+            ctx.globalAlpha = p.life;
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          });
+          ctx.globalAlpha = 1;
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function spin() {
+        if (state.isSpinning || state.players.length < 2) return;
+        var N = state.players.length;
+        var winnerIndex = Math.floor(Math.random() * N);
+        var sectorAngle = 360 / N;
+        var targetAngle = 360 - winnerIndex * sectorAngle - sectorAngle / 2;
+        var k = 3 + Math.floor(Math.random() * 4);
+        var finalRotate = state.currentRotation + k * 360 + targetAngle;
+        var duration = 2000 + Math.random() * 2000;
+
+        state.isSpinning = true;
+        spinBtn.disabled = true;
+        winnerEl.textContent = '';
+
+        diskInner.style.transition = 'transform ' + (duration / 1000) + 's cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+        diskInner.style.transform = 'rotate(' + finalRotate + 'deg)';
+
+        setTimeout(function () {
+          state.currentRotation = finalRotate % 360;
+          diskInner.style.transition = '';
+          var winner = state.players[winnerIndex];
+          state.players.splice(winnerIndex, 1);
+          state.winnerHistory.unshift(winner);
+          winnerEl.textContent = 'Победитель: ' + winner;
+          updateUI();
+          renderWheel();
+          diskInner.style.transform = 'rotate(' + state.currentRotation + 'deg)';
+          runConfetti();
+          state.isSpinning = false;
+          spinBtn.disabled = state.players.length < 2;
+        }, duration);
+      }
+
+      function reset() {
+        state.players = initialPlayers.slice();
+        state.winnerHistory = [];
+        state.currentRotation = 0;
+        state.isSpinning = false;
+        diskInner.style.transition = '';
+        diskInner.style.transform = 'rotate(0deg)';
+        winnerEl.textContent = '';
+        renderWheel();
+        updateUI();
+      }
+
+      function updateList() {
+        var raw = parseList(listInput.value);
+        var list = dedupe(raw);
+        if (list.length < 2) {
+          warningEl.textContent = 'Минимум 2 участника. Пустые строки и дубликаты удаляются.';
+          return;
+        }
+        state.players = list;
+        warningEl.textContent = '';
+        renderWheel();
+        updateUI();
+      }
+
+      spinBtn.addEventListener('click', spin);
+      btnReset.addEventListener('click', reset);
+      if (btnUpdate) btnUpdate.addEventListener('click', updateList);
+
+      renderWheel();
+      updateUI();
     })();
   </script>
 </body>
