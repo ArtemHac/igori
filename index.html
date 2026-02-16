@@ -991,6 +991,9 @@
   <audio id="mushroom-audio" preload="auto">
     <source src="music/track.mp3" type="audio/mpeg">
   </audio>
+  <audio id="wheel-spin-audio" preload="auto">
+    <source src="music/Ebanyjj.mp3" type="audio/mpeg">
+  </audio>
 
   <header>
     <div class="container">
@@ -1170,17 +1173,19 @@
     /* ========== Колесо удачи ========== */
     (function () {
       var initialPlayers = [
-        'Данил Истомаин',
-        'Артем Хачатрян',
-        'Влад Несмиянов',
-        'Андрей Башкатов',
-        'Артём Тертышников'
+        'Данил И',
+        'Артем Х',
+        'Влад Н',
+        'Андрей Б',
+        'Артём Т',
+        'Данил Н'
       ];
 
       var WHEEL_COLORS = ['#6366f1', '#22c55e', '#e11d48', '#d97706', '#0891b2', '#7c3aed', '#dc2626', '#16a34a', '#ea580c', '#2563eb'];
 
       var diskInner = document.getElementById('wheel-disk-inner');
       var spinBtn = document.getElementById('wheel-spin-btn');
+      var wheelSpinAudio = document.getElementById('wheel-spin-audio');
       var winnerEl = document.getElementById('wheel-winner-text');
       var historyList = document.getElementById('wheel-history-list');
       var listInput = document.getElementById('wheel-list-input');
@@ -1382,11 +1387,19 @@
         state.isSpinning = true;
         spinBtn.disabled = true;
         winnerEl.textContent = '';
+        if (wheelSpinAudio) {
+          wheelSpinAudio.currentTime = 0;
+          wheelSpinAudio.play().catch(function () {});
+        }
 
         diskInner.style.transition = 'transform ' + (duration / 1000) + 's cubic-bezier(0.17, 0.67, 0.12, 0.99)';
         diskInner.style.transform = 'rotate(' + finalRotate + 'deg)';
 
         setTimeout(function () {
+          if (wheelSpinAudio) {
+            wheelSpinAudio.pause();
+            wheelSpinAudio.currentTime = 0;
+          }
           state.currentRotation = finalRotate % 360;
           diskInner.style.transition = '';
           var winner = state.players[winnerIndex];
