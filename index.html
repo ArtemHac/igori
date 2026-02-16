@@ -539,6 +539,129 @@
       max-height: 200px;
     }
 
+    /* Список Пидарасов */
+    .pindari-section {
+      padding: 48px 0;
+    }
+
+    .pindari-title-center {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .pindari-title-wrap {
+      display: inline-block;
+      position: relative;
+    }
+
+    .pindari-title {
+      display: inline-block;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #d4af37;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 8px 16px;
+    }
+
+    .pindari-title-wrap .salute-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .pindari-title-wrap:hover .salute-particle {
+      animation: salute 1s ease-out forwards;
+    }
+
+    .pindari-title-wrap .salute-particle:nth-child(1) { background: #d4af37; --dx: 0; --dy: -1; }
+    .pindari-title-wrap .salute-particle:nth-child(2) { background: #ffd700; --dx: 0.7; --dy: -0.7; }
+    .pindari-title-wrap .salute-particle:nth-child(3) { background: #ffec8b; --dx: 1; --dy: 0; }
+    .pindari-title-wrap .salute-particle:nth-child(4) { background: #d4af37; --dx: 0.7; --dy: 0.7; }
+    .pindari-title-wrap .salute-particle:nth-child(5) { background: #ffd700; --dx: 0; --dy: 1; }
+    .pindari-title-wrap .salute-particle:nth-child(6) { background: #ffec8b; --dx: -0.7; --dy: 0.7; }
+    .pindari-title-wrap .salute-particle:nth-child(7) { background: #d4af37; --dx: -1; --dy: 0; }
+    .pindari-title-wrap .salute-particle:nth-child(8) { background: #ffd700; --dx: -0.7; --dy: -0.7; }
+
+    .pindari-title-wrap .salute-particle:nth-child(1) { animation-delay: 0s; }
+    .pindari-title-wrap .salute-particle:nth-child(2) { animation-delay: 0.05s; }
+    .pindari-title-wrap .salute-particle:nth-child(3) { animation-delay: 0.1s; }
+    .pindari-title-wrap .salute-particle:nth-child(4) { animation-delay: 0.15s; }
+    .pindari-title-wrap .salute-particle:nth-child(5) { animation-delay: 0.2s; }
+    .pindari-title-wrap .salute-particle:nth-child(6) { animation-delay: 0.25s; }
+    .pindari-title-wrap .salute-particle:nth-child(7) { animation-delay: 0.3s; }
+    .pindari-title-wrap .salute-particle:nth-child(8) { animation-delay: 0.35s; }
+
+    @keyframes salute {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translate(calc(var(--dx) * 70px), calc(var(--dy) * 70px)) scale(0.2);
+      }
+    }
+
+    .pindari-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .pindari-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pindari-table th {
+      padding: 14px 20px;
+      text-align: left;
+      background: var(--surface2);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pindari-table th:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .pindari-table td {
+      padding: 12px 20px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .pindari-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pindari-table td:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .pindari-table .name {
+      font-weight: 500;
+    }
+
+    .pindari-table .note {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
     /* Кастомная кнопка-гриб с дёрганием */
     .mushroom-btn {
       position: fixed;
@@ -703,6 +826,43 @@
             Перейти к сбору (Сбер)
           </span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pindari-section">
+    <div class="container">
+      <div class="pindari-title-center">
+        <div class="pindari-title-wrap">
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <span class="salute-particle" aria-hidden="true"></span>
+          <h2 class="pindari-title">Список Пидарасов</h2>
+        </div>
+      </div>
+      <div class="pindari-table-wrap">
+        <table class="pindari-table">
+          <thead>
+            <tr>
+              <th>Записанные ручкой</th>
+              <th>Записанные карандашом</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>—</td>
+              <td>
+                <span class="name">Данил Никулин</span>
+                <span class="note">вернул подаренную игру</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
