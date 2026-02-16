@@ -803,16 +803,19 @@
 
     .wheel-svg text.wheel-segment-text {
       fill: #fff;
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 600;
       text-anchor: middle;
-      dominant-baseline: middle;
       pointer-events: none;
       user-select: none;
     }
 
+    .wheel-svg text.wheel-segment-text tspan {
+      font-size: inherit;
+    }
+
     @media (min-width: 500px) {
-      .wheel-svg text.wheel-segment-text { font-size: 10px; }
+      .wheel-svg text.wheel-segment-text { font-size: 9px; }
     }
 
     .wheel-spin-btn-wrap {
@@ -1223,39 +1226,86 @@
         };
       }
 
+      function escapeAttr(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function fitNameToArc(rawName, arcLength, fontSize) {
+        var approxCharWidth = fontSize * 0.55;
+        var maxChars = Math.max(4, Math.floor(arcLength / approxCharWidth) - 1);
+        if (rawName.length <= maxChars) return { text: rawName, twoLine: false };
+        var parts = rawName.trim().split(/\s+/);
+        if (parts.length >= 2) {
+          var first = parts[0];
+          var rest = parts.slice(1).join(' ');
+          var half = Math.floor(maxChars / 2);
+          if (first.length <= half + 2 && rest.length <= half + 2)
+            return { text: first + '\n' + rest, twoLine: true };
+        }
+        return { text: rawName.length > maxChars ? rawName.slice(0, maxChars - 1) + '\u2026' : rawName, twoLine: false };
+      }
+
       function renderWheel() {
         var N = state.players.length;
         var cx = 100;
         var cy = 100;
         var r = 100;
+        var textR = 48;
+        var minFontSize = 6;
         if (N === 0) {
           diskInner.innerHTML = '<svg class="wheel-svg" viewBox="0 0 200 200"><text x="100" y="100" text-anchor="middle" fill="var(--text-muted)" font-size="12">Добавьте участников</text></svg>';
           return;
         }
 
         var sectorAngle = 360 / N;
-        var paths = [];
-        var texts = [];
+        var arcLength = textR * rad(sectorAngle);
+        var fontSize = N <= 6 ? 8 : (N <= 9 ? 7 : minFontSize);
+        if (arcLength < 25) fontSize = Math.max(minFontSize, fontSize - 1);
+
+        var defs = [];
+        var groups = [];
         for (var i = 0; i < N; i++) {
           var a1 = i * sectorAngle;
           var a2 = (i + 1) * sectorAngle;
           var p1 = pointOnCircle(cx, cy, r, a1);
           var p2 = pointOnCircle(cx, cy, r, a2);
           var largeArc = sectorAngle > 180 ? 1 : 0;
-          var d = 'M ' + cx + ' ' + cy + ' L ' + p1.x + ' ' + p1.y + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + p2.x + ' ' + p2.y + ' Z';
-          var color = WHEEL_COLORS[i % WHEEL_COLORS.length];
-          paths.push('<path class="wheel-segment" data-index="' + i + '" fill="' + color + '" d="' + d + '"/>');
+          var sectorPath = 'M ' + cx + ' ' + cy + ' L ' + p1.x + ' ' + p1.y + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + p2.x + ' ' + p2.y + ' Z';
 
-          var midAngle = (i + 0.5) * sectorAngle;
-          var textR = 55;
-          var tp = pointOnCircle(cx, cy, textR, midAngle);
+          var ap1 = pointOnCircle(cx, cy, textR, a1);
+          var ap2 = pointOnCircle(cx, cy, textR, a2);
+          var arcLarge = sectorAngle > 180 ? 1 : 0;
+          var arcPath = 'M ' + ap1.x + ' ' + ap1.y + ' A ' + textR + ' ' + textR + ' 0 ' + arcLarge + ' 1 ' + ap2.x + ' ' + ap2.y;
+
+          var clipId = 'clip-wheel-' + i;
+          var arcId = 'arc-wheel-' + i;
+          defs.push('<clipPath id="' + clipId + '"><path d="' + sectorPath + '"/></clipPath>');
+          defs.push('<path id="' + arcId + '" d="' + arcPath + '"/>');
+
+          var color = WHEEL_COLORS[i % WHEEL_COLORS.length];
           var rawName = state.players[i];
-          var safeName = rawName.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-          var displayName = rawName.length > 22 ? rawName.slice(0, 20) + '…' : rawName;
-          var displaySafe = displayName.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-          texts.push('<text class="wheel-segment-text" x="' + tp.x + '" y="' + tp.y + '" transform="rotate(' + midAngle + ', ' + tp.x + ', ' + tp.y + ')" title="' + safeName + '">' + displaySafe + '</text>');
+          var fitted = fitNameToArc(rawName, arcLength, fontSize);
+          var titleAttr = rawName !== fitted.text ? ' title="' + escapeAttr(rawName) + '"' : '';
+
+          var textEl;
+          if (fitted.twoLine) {
+            var lines = fitted.text.split('\n');
+            var r1 = textR + 3;
+            var r2 = textR - 3;
+            var arcPath1 = 'M ' + pointOnCircle(cx, cy, r1, a1).x + ' ' + pointOnCircle(cx, cy, r1, a1).y + ' A ' + r1 + ' ' + r1 + ' 0 ' + arcLarge + ' 1 ' + pointOnCircle(cx, cy, r1, a2).x + ' ' + pointOnCircle(cx, cy, r1, a2).y;
+            var arcPath2 = 'M ' + pointOnCircle(cx, cy, r2, a1).x + ' ' + pointOnCircle(cx, cy, r2, a1).y + ' A ' + r2 + ' ' + r2 + ' 0 ' + arcLarge + ' 1 ' + pointOnCircle(cx, cy, r2, a2).x + ' ' + pointOnCircle(cx, cy, r2, a2).y;
+            var arcId1 = 'arc-wheel-' + i + '-1';
+            var arcId2 = 'arc-wheel-' + i + '-2';
+            defs.push('<path id="' + arcId1 + '" d="' + arcPath1 + '"/>');
+            defs.push('<path id="' + arcId2 + '" d="' + arcPath2 + '"/>');
+            textEl = '<text class="wheel-segment-text" font-size="' + fontSize + '"' + titleAttr + '><textPath href="#' + arcId1 + '" startOffset="50%" text-anchor="middle">' + escapeAttr(lines[0]) + '</textPath></text><text class="wheel-segment-text" font-size="' + fontSize + '"' + titleAttr + '><textPath href="#' + arcId2 + '" startOffset="50%" text-anchor="middle">' + escapeAttr(lines[1]) + '</textPath></text>';
+          } else {
+            textEl = '<text class="wheel-segment-text" font-size="' + fontSize + '"' + titleAttr + '><textPath href="#' + arcId + '" startOffset="50%" text-anchor="middle">' + escapeAttr(fitted.text) + '</textPath></text>';
+          }
+
+          groups.push('<g clip-path="url(#' + clipId + ')"><path class="wheel-segment" data-index="' + i + '" fill="' + color + '" d="' + sectorPath + '"/>' + textEl + '</g>');
         }
-        diskInner.innerHTML = '<svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">' + paths.join('') + texts.join('') + '</svg>';
+        diskInner.innerHTML = '<svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs>' + defs.join('') + '</defs>' + groups.join('') + '</svg>';
       }
 
       function updateUI() {
