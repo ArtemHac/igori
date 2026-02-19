@@ -977,7 +977,7 @@
       left: 0;
       right: 0;
       bottom: 12px;
-      height: 36px;
+      height: 48px;
       pointer-events: none;
     }
 
@@ -985,67 +985,131 @@
       pointer-events: auto;
       cursor: pointer;
       position: absolute;
-      width: 44px;
-      height: 24px;
+      width: 64px;
+      height: 36px;
       animation: fish-swim 25s linear infinite;
     }
 
+    .fish-shape {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Тело — объёмное, как у гриба */
     .fish-body {
       position: absolute;
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 32px;
-      height: 20px;
-      background: linear-gradient(135deg, #ff9a56 0%, #ff7b3d 50%, #e85a2a 100%);
+      width: 42px;
+      height: 26px;
+      background: linear-gradient(180deg, #6ec1e8 0%, #4a9fd4 35%, #2d7fb8 70%, #1a5f8a 100%);
       border-radius: 50% 45% 45% 50%;
-      box-shadow: inset -2px 0 4px rgba(255,255,255,0.3);
+      box-shadow: inset 3px 2px 6px rgba(255,255,255,0.35),
+                  inset -2px -2px 4px rgba(0,0,0,0.25),
+                  0 1px 0 rgba(255,255,255,0.2);
     }
 
+    /* Жабры */
     .fish-body::before {
       content: '';
       position: absolute;
-      left: 6px;
+      left: 8px;
       top: 50%;
       transform: translateY(-50%);
-      width: 6px;
-      height: 6px;
-      background: #1a1a1f;
-      border-radius: 50%;
-      box-shadow: 0 0 0 1px #fff;
+      width: 2px;
+      height: 14px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.2) 0%, transparent 100%);
+      border-radius: 1px;
     }
 
+    /* Глаз — чёткий, с бликом */
+    .fish-eye {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: linear-gradient(145deg, #f0f0f0 0%, #e0e0e0 50%, #c0c0c0 100%);
+      border-radius: 50%;
+      box-shadow: inset 1px 1px 2px rgba(255,255,255,0.9),
+                  inset -1px -1px 2px rgba(0,0,0,0.15),
+                  0 0 0 2px #1a3a52;
+    }
+
+    .fish-eye::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 4px;
+      height: 4px;
+      background: #1a1a1f;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+    }
+
+    .fish-eye::before {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    /* Хвост — объёмный */
     .fish-tail {
       position: absolute;
-      right: -4px;
+      right: -2px;
       top: 50%;
       transform: translateY(-50%);
       width: 0;
       height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-left: 16px solid #e85a2a;
+      border-top: 12px solid transparent;
+      border-bottom: 12px solid transparent;
+      border-left: 22px solid #2d7fb8;
+      box-shadow: 1px 0 0 rgba(0,0,0,0.15);
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.2));
+    }
+
+    /* Спинной плавник */
+    .fish-fin {
+      position: absolute;
+      left: 22px;
+      top: -3px;
+      width: 12px;
+      height: 8px;
+      background: linear-gradient(180deg, #6ec1e8 0%, #3d8fc5 60%, #2d7fb8 100%);
+      border-radius: 0 60% 40% 0;
+      box-shadow: inset 2px 0 3px rgba(255,255,255,0.3), inset -1px 0 1px rgba(0,0,0,0.15);
+      clip-path: polygon(0 100%, 20% 10%, 100% 0%, 100% 100%);
     }
 
     @keyframes fish-swim {
       0% {
-        left: -50px;
+        left: -60px;
         transform: translateY(0) scaleX(1);
       }
       25% {
         left: 25%;
-        transform: translateY(-4px) scaleX(1);
+        transform: translateY(-5px) scaleX(1);
       }
       50% {
         left: 50%;
-        transform: translateY(2px) scaleX(1);
+        transform: translateY(3px) scaleX(1);
       }
       75% {
         left: 75%;
-        transform: translateY(-3px) scaleX(1);
+        transform: translateY(-4px) scaleX(1);
       }
       100% {
-        left: calc(100% + 50px);
+        left: calc(100% + 60px);
         transform: translateY(0) scaleX(1);
       }
     }
@@ -1230,8 +1294,12 @@
     <div class="container">Фонд покупки игр · Игоры</div>
     <div class="footer-fish-wrap" aria-hidden="true">
       <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек">
-        <span class="fish-body"></span>
-        <span class="fish-tail"></span>
+        <span class="fish-shape">
+          <span class="fish-body"></span>
+          <span class="fish-eye"></span>
+          <span class="fish-fin"></span>
+          <span class="fish-tail"></span>
+        </span>
       </button>
     </div>
   </footer>
