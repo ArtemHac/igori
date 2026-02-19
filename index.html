@@ -20,6 +20,7 @@
       --green: #22c55e;
       --sber: #21a038;
       --sber-light: #2fd656;
+      --fish-size: 72px;
     }
 
     * {
@@ -972,12 +973,13 @@
       overflow: hidden;
     }
 
+    /* Рыбка в футере — BEM, только HTML+CSS */
     .footer-fish-wrap {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 12px;
-      height: 52px;
+      height: 56px;
       pointer-events: none;
     }
 
@@ -985,168 +987,136 @@
       pointer-events: auto;
       cursor: pointer;
       position: absolute;
-      width: 88px;
-      height: 36px;
+      width: var(--fish-size);
+      height: calc(var(--fish-size) * 0.6);
+      border: none;
+      padding: 0;
+      background: transparent;
       animation: fish-swim 25s linear infinite;
     }
 
-    .fish-shape {
+    .fish {
+      position: relative;
+      transition: filter 0.3s ease;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+    }
+
+    .fish:hover {
+      filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.5));
+    }
+
+    .fish__inner {
+      display: block;
       position: relative;
       width: 100%;
       height: 100%;
+      animation: fish-breathe 4s ease-in-out infinite;
     }
 
-    /* Тело акулы: серый верх, белый низ, чёткая граница, без обводки */
-    .fish-body {
+    .fish__body {
       position: absolute;
       left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 58px;
-      height: 28px;
-      background: linear-gradient(165deg, #5a6570 0%, #4a5560 42%, #e8eaed 52%, #f2f4f6 100%);
-      clip-path: polygon(0 50%, 6% 12%, 22% 0%, 78% 0%, 92% 15%, 100% 50%, 92% 85%, 78% 100%, 22% 100%, 6% 88%);
-      box-shadow: inset 2px 1px 4px rgba(255,255,255,0.12),
-                  inset -2px -1px 4px rgba(0,0,0,0.2);
+      top: 0;
+      width: 75%;
+      height: 100%;
+      background: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 50%, #2563eb 100%);
+      border-radius: 60% 50% 50% 60% / 50% 50% 50% 50%;
+      box-shadow: inset 2px 1px 4px rgba(255,255,255,0.2),
+                  inset -1px -1px 3px rgba(0,0,0,0.15);
     }
 
-    /* Риджи на теле (слоистость) */
-    .fish-body::before {
-      content: '';
+    .fish__eye {
       position: absolute;
-      inset: 2px 8px 2px 4px;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent 0,
-        transparent 6px,
-        rgba(0,0,0,0.06) 6px,
-        rgba(0,0,0,0.06) 7px
-      );
-      clip-path: polygon(0 50%, 6% 12%, 22% 0%, 78% 0%, 92% 15%, 100% 50%, 92% 85%, 78% 100%, 22% 100%, 6% 88%);
-      pointer-events: none;
+      top: 35%;
+      left: 65%;
+      width: 14%;
+      height: 14%;
+      min-width: 8px;
+      min-height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: inset 0 0 2px rgba(0,0,0,0.1);
     }
 
-    /* Глаз — чёрный круг, без белой обводки */
-    .fish-eye {
+    .fish__eye::after {
+      content: "";
       position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 8px;
-      height: 8px;
+      top: 30%;
+      left: 30%;
+      width: 50%;
+      height: 50%;
       background: #1a1a1a;
       border-radius: 50%;
-      box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
     }
 
-    .fish-eye::before {
-      content: '';
+    .fish__eye::before {
+      content: "";
       position: absolute;
-      left: 2px;
-      top: 1px;
-      width: 2px;
-      height: 2px;
-      background: rgba(255,255,255,0.5);
+      top: 25%;
+      left: 25%;
+      width: 35%;
+      height: 35%;
+      background: rgba(255,255,255,0.9);
       border-radius: 50%;
     }
 
-    /* Рот — линия */
-    .fish-mouth {
-      position: absolute;
-      left: 4px;
-      top: 50%;
-      width: 10px;
-      height: 1px;
-      background: rgba(0,0,0,0.35);
-      transform: translateY(2px) rotate(-8deg);
-    }
-
-    /* Спинной плавник — серый, без обводки */
-    .fish-dorsal {
-      position: absolute;
-      left: 28px;
-      top: -6px;
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 14px solid #4a5560;
-      box-shadow: inset 1px 0 2px rgba(0,0,0,0.2);
-    }
-
-    /* Грудные плавники */
-    .fish-pectoral {
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 10px;
-      background: linear-gradient(165deg, #5a6570 0%, #e8eaed 55%);
-      clip-path: polygon(0 50%, 100% 0%, 100% 100%);
-      box-shadow: inset 1px 0 1px rgba(0,0,0,0.1);
-    }
-
-    .fish-pectoral-right {
-      left: 20px;
-      transform: translateY(-50%) scaleY(-1);
-    }
-
-    /* Хвост (каудальный) — серый верх, белый низ, полумесяц */
-    .fish-tail {
-      position: absolute;
-      right: -4px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-    }
-
-    .fish-tail::before {
-      content: '';
+    .fish__tail {
       position: absolute;
       right: 0;
-      top: 0;
-      width: 100%;
-      height: 50%;
-      background: #4a5560;
-      clip-path: polygon(40% 100%, 100% 50%, 100% 0, 0 0, 0 100%);
-      box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+      top: 50%;
+      width: 30%;
+      height: 70%;
+      background: linear-gradient(135deg, #2dd4bf 0%, #1e40af 100%);
+      transform: translateY(-50%);
+      clip-path: polygon(0 50%, 100% 0, 100% 100%);
+      transform-origin: left center;
+      animation: fish-tail 2s ease-in-out infinite;
+      box-shadow: inset 1px 0 2px rgba(0,0,0,0.15);
     }
 
-    .fish-tail::after {
-      content: '';
+    .fish__fin {
       position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 100%;
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.9) 0%, rgba(37, 99, 235, 0.9) 100%);
+    }
+
+    .fish__fin--top {
+      top: -18%;
+      left: 30%;
+      width: 25%;
       height: 50%;
-      background: #e8eaed;
-      clip-path: polygon(40% 0%, 100% 50%, 100% 100%, 0 100%, 0 0);
-      box-shadow: inset 0 -1px 2px rgba(0,0,0,0.06);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+      box-shadow: inset 1px 0 2px rgba(255,255,255,0.2);
+    }
+
+    .fish__fin--bottom {
+      bottom: -18%;
+      left: 30%;
+      width: 20%;
+      height: 40%;
+      clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
+      box-shadow: inset 1px 0 2px rgba(255,255,255,0.15);
+    }
+
+    @keyframes fish-tail {
+      0%, 100% { transform: translateY(-50%) rotate(0deg); }
+      50% { transform: translateY(-50%) rotate(10deg); }
+    }
+
+    @keyframes fish-breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
     }
 
     @keyframes fish-swim {
-      0% {
-        left: -80px;
-        transform: translateY(0) scaleX(1);
-      }
-      25% {
-        left: 25%;
-        transform: translateY(-5px) scaleX(1);
-      }
-      50% {
-        left: 50%;
-        transform: translateY(3px) scaleX(1);
-      }
-      75% {
-        left: 75%;
-        transform: translateY(-4px) scaleX(1);
-      }
-      100% {
-        left: calc(100% + 80px);
-        transform: translateY(0) scaleX(1);
-      }
+      0% { left: -80px; transform: translateY(0) scaleX(1); }
+      25% { left: 25%; transform: translateY(-5px) scaleX(1); }
+      50% { left: 50%; transform: translateY(4px) scaleX(1); }
+      75% { left: 75%; transform: translateY(-4px) scaleX(1); }
+      100% { left: calc(100% + 80px); transform: translateY(0) scaleX(1); }
+    }
+
+    @media (min-width: 500px) {
+      :root { --fish-size: 88px; }
     }
 
   </style>
@@ -1329,13 +1299,13 @@
     <div class="container">Фонд покупки игр · Игоры</div>
     <div class="footer-fish-wrap" aria-hidden="true">
       <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек">
-        <span class="fish-shape">
-          <span class="fish-body"></span>
-          <span class="fish-eye"></span>
-          <span class="fish-mouth"></span>
-          <span class="fish-dorsal"></span>
-          <span class="fish-pectoral fish-pectoral-right"></span>
-          <span class="fish-tail"></span>
+        <span class="fish__inner">
+          <span class="fish__body">
+            <span class="fish__eye"></span>
+          </span>
+          <span class="fish__tail"></span>
+          <span class="fish__fin fish__fin--top"></span>
+          <span class="fish__fin fish__fin--bottom"></span>
         </span>
       </button>
     </div>
