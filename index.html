@@ -973,7 +973,7 @@
       overflow: hidden;
     }
 
-    /* Рыбка в футере — один элемент + ::before (хвост) + ::after (глаз) */
+    /* Рыбка в футере — синяя + пузырьки */
     .footer-fish-wrap {
       position: absolute;
       left: 0;
@@ -983,14 +983,18 @@
       pointer-events: none;
     }
 
+    .fish-container {
+      position: absolute;
+      animation: fish-swim 25s linear infinite;
+    }
+
     .footer-fish-wrap .fish {
       pointer-events: auto;
       cursor: pointer;
-      position: absolute;
+      position: relative;
       margin: 0;
       border: none;
       padding: 0;
-      animation: fish-swim 25s linear infinite;
     }
 
     .fish {
@@ -999,13 +1003,13 @@
       position: relative;
       border-radius: 1.5em 0 1.5em 0;
       transform: rotate(45deg);
-      background-color: #2C2C2C;
+      background: linear-gradient(145deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
       transition: filter 0.3s ease;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
     }
 
     .fish:hover {
-      filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.4));
+      filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
     }
 
     .fish::before {
@@ -1015,7 +1019,7 @@
       right: 1.4em;
       width: 0.3em;
       height: 0;
-      border-bottom: 0.5em solid #2C2C2C;
+      border-bottom: 0.5em solid #1d4ed8;
       border-left: 0.5em solid transparent;
       border-right: 0.5em solid transparent;
       transform: rotate(45deg);
@@ -1030,15 +1034,34 @@
       height: 0.2em;
       width: 0.2em;
       border-radius: 0.1em;
-      box-shadow: 0.15em -0.7em 0.05em 0.02em #2C2C2C, -0.1em -1.2em 0.05em 0.06em #2C2C2C;
+      box-shadow: 0.15em -0.7em 0.05em 0.02em #1d4ed8, -0.1em -1.2em 0.05em 0.06em #1d4ed8;
+    }
+
+    /* Пузырьки */
+    .fish-bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      pointer-events: none;
+      animation: bubble-rise 2s ease-in-out infinite;
+    }
+
+    .fish-bubble:nth-child(1) { left: 0.3em; bottom: 0.2em; width: 0.25em; height: 0.25em; animation-delay: 0s; }
+    .fish-bubble:nth-child(2) { left: 0.6em; bottom: 0.1em; width: 0.18em; height: 0.18em; animation-delay: 0.4s; }
+    .fish-bubble:nth-child(3) { left: 0.9em; bottom: 0.25em; width: 0.22em; height: 0.22em; animation-delay: 0.8s; }
+
+    @keyframes bubble-rise {
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-0.8em) scale(1.1); opacity: 0.8; }
+      100% { transform: translateY(-1.5em) scale(0.9); opacity: 0; }
     }
 
     @keyframes fish-swim {
-      0% { left: -3em; transform: rotate(45deg) translateY(0); }
-      25% { left: 25%; transform: rotate(45deg) translateY(-4px); }
-      50% { left: 50%; transform: rotate(45deg) translateY(3px); }
-      75% { left: 75%; transform: rotate(45deg) translateY(-3px); }
-      100% { left: calc(100% + 3em); transform: rotate(45deg) translateY(0); }
+      0% { left: -3em; transform: translateY(0); }
+      25% { left: 25%; transform: translateY(-4px); }
+      50% { left: 50%; transform: translateY(3px); }
+      75% { left: 75%; transform: translateY(-3px); }
+      100% { left: calc(100% + 3em); transform: translateY(0); }
     }
 
   </style>
@@ -1220,7 +1243,12 @@
   <footer>
     <div class="container">Фонд покупки игр · Игоры</div>
     <div class="footer-fish-wrap" aria-hidden="true">
-      <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек"></button>
+      <div class="fish-container">
+        <span class="fish-bubble"></span>
+        <span class="fish-bubble"></span>
+        <span class="fish-bubble"></span>
+        <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек"></button>
+      </div>
     </div>
   </footer>
 
