@@ -973,145 +973,72 @@
       overflow: hidden;
     }
 
-    /* Рыбка в футере — BEM */
+    /* Рыбка в футере — один элемент + ::before (хвост) + ::after (глаз) */
     .footer-fish-wrap {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 12px;
-      height: 64px;
+      height: 56px;
       pointer-events: none;
     }
 
     .footer-fish-wrap .fish {
-      --fish-size: 100px;
       pointer-events: auto;
       cursor: pointer;
       position: absolute;
-      width: var(--fish-size);
-      height: calc(var(--fish-size) * 0.65);
+      margin: 0;
       border: none;
       padding: 0;
-      background: transparent;
       animation: fish-swim 25s linear infinite;
     }
 
     .fish {
+      width: 2.1em;
+      height: 2.1em;
       position: relative;
+      border-radius: 1.5em 0 1.5em 0;
+      transform: rotate(45deg);
+      background-color: #2C2C2C;
       transition: filter 0.3s ease;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     }
 
     .fish:hover {
-      filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.5));
+      filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.4));
     }
 
-    .fish__inner {
-      display: block;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      animation: swim 4s ease-in-out infinite;
-    }
-
-    .fish__body {
+    .fish::before {
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 75%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 30%, #67e8f9, #0ea5e9 60%, #0369a1);
-      border-radius: 60% 40% 45% 55% / 50% 50% 50% 50%;
-      box-shadow:
-        inset -10px -10px 20px rgba(0,0,0,0.2),
-        inset 10px 10px 20px rgba(255,255,255,0.2);
-    }
-
-    .fish__eye {
-      position: absolute;
-      top: 38%;
-      left: 65%;
-      width: 12%;
-      height: 12%;
-      background: white;
-      border-radius: 50%;
-    }
-
-    .fish__eye::after {
       content: "";
-      position: absolute;
-      top: 35%;
-      left: 35%;
-      width: 45%;
-      height: 45%;
-      background: black;
-      border-radius: 50%;
+      top: 1.8em;
+      right: 1.4em;
+      width: 0.3em;
+      height: 0;
+      border-bottom: 0.5em solid #2C2C2C;
+      border-left: 0.5em solid transparent;
+      border-right: 0.5em solid transparent;
+      transform: rotate(45deg);
     }
 
-    .fish__eye::before {
+    .fish::after {
+      left: 0.92em;
+      top: 0.18em;
+      position: absolute;
       content: "";
-      position: absolute;
-      top: 10%;
-      left: 15%;
-      width: 25%;
-      height: 25%;
-      background: white;
-      border-radius: 50%;
-    }
-
-    .fish__tail {
-      position: absolute;
-      right: -10%;
-      top: 50%;
-      width: 35%;
-      height: 70%;
-      background: linear-gradient(135deg, #22d3ee, #0284c7);
-      transform: translateY(-50%);
-      clip-path: polygon(0 50%, 100% 10%, 100% 90%);
-      transform-origin: left center;
-      animation: tail 2s ease-in-out infinite;
-    }
-
-    .fish__fin--top {
-      position: absolute;
-      top: -25%;
-      left: 30%;
-      width: 25%;
-      height: 50%;
-      background: linear-gradient(135deg, #22d3ee, #0284c7);
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    }
-
-    .fish__fin--bottom {
-      position: absolute;
-      bottom: -25%;
-      left: 35%;
-      width: 20%;
-      height: 40%;
-      background: linear-gradient(135deg, #22d3ee, #0284c7);
-      clip-path: polygon(50% 100%, 100% 0%, 0% 0%);
-    }
-
-    @keyframes tail {
-      0%, 100% { transform: translateY(-50%) rotate(0deg); }
-      50% { transform: translateY(-50%) rotate(12deg); }
-    }
-
-    @keyframes swim {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      background-color: white;
+      height: 0.2em;
+      width: 0.2em;
+      border-radius: 0.1em;
+      box-shadow: 0.15em -0.7em 0.05em 0.02em #2C2C2C, -0.1em -1.2em 0.05em 0.06em #2C2C2C;
     }
 
     @keyframes fish-swim {
-      0% { left: -100px; transform: translateY(0) scaleX(1); }
-      25% { left: 25%; transform: translateY(-5px) scaleX(1); }
-      50% { left: 50%; transform: translateY(4px) scaleX(1); }
-      75% { left: 75%; transform: translateY(-4px) scaleX(1); }
-      100% { left: calc(100% + 100px); transform: translateY(0) scaleX(1); }
-    }
-
-    @media (min-width: 500px) {
-      .footer-fish-wrap .fish { --fish-size: 120px; }
+      0% { left: -3em; transform: rotate(45deg) translateY(0); }
+      25% { left: 25%; transform: rotate(45deg) translateY(-4px); }
+      50% { left: 50%; transform: rotate(45deg) translateY(3px); }
+      75% { left: 75%; transform: rotate(45deg) translateY(-3px); }
+      100% { left: calc(100% + 3em); transform: rotate(45deg) translateY(0); }
     }
 
   </style>
@@ -1293,16 +1220,7 @@
   <footer>
     <div class="container">Фонд покупки игр · Игоры</div>
     <div class="footer-fish-wrap" aria-hidden="true">
-      <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек">
-        <span class="fish__inner">
-          <span class="fish__body">
-            <span class="fish__eye"></span>
-          </span>
-          <span class="fish__tail"></span>
-          <span class="fish__fin fish__fin--top"></span>
-          <span class="fish__fin fish__fin--bottom"></span>
-        </span>
-      </button>
+      <button type="button" class="fish" id="fish-btn" title="Нажми — заиграет трек"></button>
     </div>
   </footer>
 
